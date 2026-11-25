@@ -24,7 +24,7 @@ Nimote Connect は、NimoteCode と連携する商用サービスです。開発
 
 | OS | アーキテクチャ | パッケージ |
 | --- | --- | --- |
-| macOS | Apple シリコン `arm64`、Intel `amd64` | NimoteConn デスクトップアプリ付き `.tar.gz` |
+| macOS | Apple シリコン `arm64`、Intel `amd64` | CLI 版とデスクトップ版の `.tar.gz` |
 | Linux | `amd64`、`arm64` | CLI 版 `.tar.gz`。systemd のユーザーセッションが必要 |
 | Windows | `amd64`（x64）、`arm64` | CLI 版 `.zip`。PowerShell でインストールし、ログイン中のユーザーのバックグラウンドタスクとして実行 |
 

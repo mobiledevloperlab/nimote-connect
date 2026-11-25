@@ -24,7 +24,7 @@ Selecciona el paquete de tu sistema y arquitectura y verifícalo con el archivo 
 
 | Plataforma | Arquitecturas | Paquete |
 | --- | --- | --- |
-| macOS | Apple silicon `arm64`, Intel `amd64` | `.tar.gz` con la aplicación NimoteConn |
+| macOS | Apple silicon `arm64`, Intel `amd64` | `.tar.gz` en ediciones CLI y escritorio |
 | Linux | `amd64`, `arm64` | `.tar.gz` de línea de comandos, requiere una sesión de usuario de systemd |
 | Windows | `amd64` (x64), `arm64` | `.zip` de línea de comandos con instalador PowerShell y tareas en segundo plano por usuario |
 

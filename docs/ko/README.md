@@ -24,7 +24,7 @@ Nimote Connect는 NimoteCode와 함께 사용하는 상용 서비스입니다. �
 
 | 운영체제 | 아키텍처 | 패키지 |
 | --- | --- | --- |
-| macOS | Apple Silicon `arm64`, Intel `amd64` | NimoteConn 데스크톱 앱이 포함된 `.tar.gz` |
+| macOS | Apple Silicon `arm64`, Intel `amd64` | CLI 및 데스크톱 에디션 `.tar.gz` |
 | Linux | `amd64`, `arm64` | CLI `.tar.gz`. systemd 사용자 세션 필요 |
 | Windows | `amd64`(x64), `arm64` | CLI `.zip`. PowerShell로 설치하며 로그인한 계정의 백그라운드 작업으로 실행 |
 

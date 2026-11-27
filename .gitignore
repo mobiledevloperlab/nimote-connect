@@ -26,6 +26,9 @@
 /.github/workflows/*
 !/.github/workflows/publish-release.yml
 !/.github/publish-release.py
+!/config/
+/config/*
+!/config/derp-release.json
 !/release/
 /release/*
 !/release/nimote-connect-*.tar.gz

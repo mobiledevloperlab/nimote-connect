@@ -14,6 +14,11 @@ ARCHIVE_NAME = re.compile(
     r"(?:-[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*)?)-"
     r"(?P<os>darwin|linux|windows)-(?:amd64|arm64)\.(?P<ext>tar\.gz|zip)"
 )
+PUBLIC_VERSION = re.compile(
+    r"(?P<version>(?:0|[1-9][0-9]*)(?:\.(?:0|[1-9][0-9]*)){2})"
+    r"(?:-(?P<channel>beta|rc)\.(?P<number>[1-9][0-9]*))?"
+)
+INTERNAL_VERSION = re.compile(r"[0-9]+\.[0-9]+\.[0-9]+-(?:local|ci|dev)(?:\.|$)")
 
 
 def sha256(path):
@@ -34,6 +39,12 @@ def collect_assets(directory):
         if not match or (match["os"] == "windows") != (match["ext"] == "zip"):
             raise ValueError(f"{path}: invalid archive name")
 
+        version = match["version"]
+        if INTERNAL_VERSION.match(version):
+            continue
+        if not PUBLIC_VERSION.fullmatch(version):
+            raise ValueError(f"{path}: use a stable, beta.N, or rc.N version")
+
         sidecar = path.with_name(path.name + ".sha256")
         if path.is_symlink() or sidecar.is_symlink() or not sidecar.is_file():
             raise ValueError(f"{path}: expected a regular archive and matching .sha256")
@@ -41,7 +52,7 @@ def collect_assets(directory):
         if sidecar.read_text(encoding="utf-8").split() != [digest, path.name]:
             raise ValueError(f"{sidecar}: SHA-256 or filename mismatch")
 
-        assets = releases.setdefault("v" + match["version"], {})
+        assets = releases.setdefault("v" + version, {})
         assets[path] = "sha256:" + digest
         assets[sidecar] = "sha256:" + sha256(sidecar)
     return releases
@@ -60,13 +71,19 @@ def publish(releases, repo, target):
     for tag, assets in releases.items():
         release = existing.get(tag)
         if release is None:
-            args = ["gh", "release", "create", tag, "--target", target, "--title", tag]
+            version = PUBLIC_VERSION.fullmatch(tag[1:])
+            title = f"Nimote Connect {version['version']}"
+            channel = version["channel"]
+            if channel:
+                label = {"beta": "Beta", "rc": "RC"}[channel]
+                title += f" {label} {version['number']}"
+            args = ["gh", "release", "create", tag, "--target", target, "--title", title]
             notes = Path("release") / f"{tag}.md"
             if notes.is_file():
                 args.extend(["--notes-file", str(notes)])
             else:
                 args.extend(["--notes", "Download the archive and its SHA-256 file for your platform."])
-            if "-" in tag:
+            if channel:
                 args.extend(["--prerelease", "--latest=false"])
             subprocess.run([*args, *map(str, assets)], check=True)
             continue

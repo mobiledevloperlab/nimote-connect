@@ -24,7 +24,7 @@
 
 1. 将验收后的归档与同名 `.sha256` 放进仓库根目录的 `release/`。CLI 归档使用 `nimote-connect-<版本>-<系统>-<架构>.tar.gz`（Windows 使用 `.zip`）。桌面归档使用 `nimote-connect-commercial-` 前缀。系统字段分别为 `darwin`、`linux` 和 `windows`，架构字段为 `amd64` 或 `arm64`。
 2. 可在同一提交中添加 `release/v<版本>.md`，供工作流创建 Release 时使用。
-3. 提交后推送到 `master`。Actions 会验证商业版本归档的 SHA-256，创建对应的 `v<版本>` 标签，并上传归档与校验文件。当前正式版使用 `1.2.0`，标题为 `Nimote Connect 1.2.0`，标签为 `v1.2.0`。Beta 和 RC 使用 `1.2.0-beta.1`、`1.2.0-rc.1` 这样的版本号，标记为 Pre-release。`local`、`ci` 和 `dev` 构建会跳过公开发布。
+3. 提交后推送到 `master`。Actions 会验证商业版本归档的 SHA-256，创建对应的 `v<版本>` 标签，并上传归档与校验文件。当前正式版使用 `1.2.1`，标题为 `Nimote Connect 1.2.1`，标签为 `v1.2.1`。Beta 和 RC 使用 `1.2.0-beta.1`、`1.2.0-rc.1` 这样的版本号，标记为 Pre-release。`local`、`ci` 和 `dev` 构建会跳过公开发布。
 4. 补传平台或更新归档时，将对应文件和校验值一起推送到 `master`。工作流会更新同一 Release 中新增或变动的附件。也可在 Actions 中手动运行 **Publish release packages** 来重试。已启用不可变发布的版本需要使用新版本号更新附件。
 
 GitHub 自动生成的 `Source code` 下载来自标签指向的仓库快照，其中包含已提交的安装包。用户可从 Release 的 **Assets** 直接下载所需平台的归档。
